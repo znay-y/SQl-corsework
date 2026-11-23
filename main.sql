@@ -11,6 +11,8 @@ CREATE TABLE Countries(
 -- Stores information about the communities in a given country
 CREATE TABLE Commnuitiies(
     CountryID INT PRIMARY KEY,
+    CommunityID INT NOT NULL,
+    CommunityName VARCHAR(100) NOT NULL,
     Location VARCHAR(100) NOT NULL,
     Population INT NOT NULL,
     Finance DECIMAL(18, 2) NOT NULL,
