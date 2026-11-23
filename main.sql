@@ -1,3 +1,4 @@
+-- Stores information about the contires 
 CREATE TABLE Countries(
     CountryID INT PRIMARY KEY,
     CountryName VARCHAR(100) NOT NULL,
@@ -7,6 +8,7 @@ CREATE TABLE Countries(
     CountryDevelopment varchar(50) NOT NULL
 )
 
+-- Stores information about the communities in a given country
 CREATE TABLE Commnuitiies(
     CountryID INT PRIMARY KEY,
     Location VARCHAR(100) NOT NULL,
@@ -15,6 +17,7 @@ CREATE TABLE Commnuitiies(
     FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
 )
 
+-- Data for teh climate of a given country
 CREATE TABLE Climate(
     ClimateID INT PRIMARY KEY,
     CountryID INT NOT NULL,
@@ -24,32 +27,35 @@ CREATE TABLE Climate(
     FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
 )
 
-CREATE TABLE ClimateIsues(
-    IssueID INT PRIMARY KEY,
+-- General table for issues and actions
+CREATE TABLE ClimateEvent(
+    ClimateEventID INT PRIMARY KEY,
     CountryID INT NOT NULL,
-    IssueName VARCHAR(100) NOT NULL,
+    EventName VARCHAR(100) NOT NULL,
+    Status VARCHAR(50) NOT NULL,
+)
+
+-- Specialization of climate events for issues (natrual disasters, pollution, etc.)
+CREATE TABLE ClimateIsues(
     EstimatedDamageCost DECIMAL(18, 2) NOT NULL,
     SeverityLevel INT NOT NULL,
     IssueBudget DECIMAL(18, 2) NOT NULL,
     IssuesDate DATE NOT NULL,
-    IssueStatus VARCHAR(50) NOT NULL,
     FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
- 
 )
 
+-- Specialization of climate events for actions (renewable energy projects, reforestation, etc.)
 CREATE TABLE ClimateActions(
-    ActionID INT PRIMARY KEY,
-    CountryID INT NOT NULL,
     RequiredBudget DECIMAL(18, 2) NOT NULL,
     BudgetReceived DECIMAL(18, 2) NOT NULL,
-    Status VARCHAR(50) NOT NULL,
     FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
-    )
-
-CREATE TABLE ClimateFunding(
-    FundingID INT PRIMARY KEY,
-    CountryID INT NOT NULL,
-    AmountGiven DECIMAL(18, 2) NOT NULL,
-    AmountUsed DECIMAL(18, 2) NOT NULL,
 )
-    
+
+-- Information for transactions related to climate events
+CREATE TABLE Transactions(
+    TransactionID INT PRIMARY KEY,
+    CountryID INT NOT NULL,
+    amount DECIMAL(18, 2) NOT NULL,
+    ClimateEventID INT NOT NULL,
+    FOREIGN KEY (ClimateEventID) REFERENCES ClimateEvent(ClimateEventID)
+)
