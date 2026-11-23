@@ -7,6 +7,14 @@ CREATE TABLE Countries(
     CountryDevelopment varchar(50) NOT NULL
 )
 
+CREATE TABLE Commnuitiies(
+    CountryID INT PRIMARY KEY,
+    Location VARCHAR(100) NOT NULL,
+    Population INT NOT NULL,
+    Finance DECIMAL(18, 2) NOT NULL,
+    FOREIGN KEY (CountryID) REFERENCES Countries(CountryID)
+)
+
 CREATE TABLE Climate(
     ClimateID INT PRIMARY KEY,
     CountryID INT NOT NULL,
